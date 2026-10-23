@@ -48,14 +48,33 @@ public partial class BibleReadingComponent(IBibleContent content)
         _verses = await content.GetBookChaptersDataAsync(BookName, Chapter, Chapter);
     }
     private string GetButtonText() => HasMore ? "Next Reading" : "Finished Reading For Day";
+    private bool _processingClick;
+
     private async Task ProcessAsync()
     {
-        if (HasMore)
+        if (_processingClick)
         {
-            await OnNextReading.InvokeAsync();
             return;
         }
-        await OnFinished.InvokeAsync();
+
+        _processingClick = true;
+        StateHasChanged();
+
+        try
+        {
+            if (HasMore)
+            {
+                await OnNextReading.InvokeAsync();
+            }
+            else
+            {
+                await OnFinished.InvokeAsync();
+            }
+        }
+        finally
+        {
+            _processingClick = false;
+        }
     }
     protected override void OnAfterRender(bool firstRender)
     {

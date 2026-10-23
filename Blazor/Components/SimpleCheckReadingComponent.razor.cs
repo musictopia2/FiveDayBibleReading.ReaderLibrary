@@ -43,20 +43,6 @@ public partial class SimpleCheckReadingComponent(BibleReaderService readerServic
             _processing = false;
         }
     }
-    //private async Task FinishReadingAsync()
-    //{
-    //    _status = EnumStatus.FinishedReading;
-    //    _currentRange!.Completed = true;
-    //    //you may have another reading.  has to save what you have done.
-    //    _model!.CurrentReading.Completed = true;
-    //    await ScheduleService!.SaveReadingListAsync(_dailyList);
-    //    _model = await ScheduleService.GetCurrentInfoAsync(_dailyList); //hopefully will just work now.
-    //    //ScheduleService.FinishedReading?.Invoke(); //if not null, then invoke.
-    //    if (FinishedReading.HasDelegate)
-    //    {
-    //        await FinishedReading.InvokeAsync();
-    //    }
-    //}
     private async Task FinishReadingAsync()
     {
         _status = EnumStatus.FinishedReading;
@@ -69,14 +55,31 @@ public partial class SimpleCheckReadingComponent(BibleReaderService readerServic
             await FinishedReading.InvokeAsync();
         }
     }
-
-
-
-
     private async Task FinishedSectionAsync()
     {
-        await readerService.CompleteCurrentChapterAsync();
+        if (_processing)
+        {
+            return;
+        }
 
+        _processing = true;
 
+        try
+        {
+            var chapter = readerService.CurrentChapter;
+
+            await readerService.CompleteCurrentChapterAsync();
+
+            var next = readerService.CurrentChapter;
+
+            _status = readerService.IsReadingDue
+                ? EnumStatus.ShowReading
+                : EnumStatus.FinishedReading;
+        }
+        
+        finally
+        {
+            _processing = false;
+        }
     }
 }

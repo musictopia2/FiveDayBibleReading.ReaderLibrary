@@ -25,11 +25,11 @@
     </MainContent>
     <BottomContent>
         
-        @if (Chapter > 0)
-        {
+        <fieldset disabled="@_processingClick"
+                  style="border: 0; padding: 0; margin: 0;">
             <PrimaryButton OnClick="ProcessAsync">
-                @GetButtonText()
+                @(_processingClick ? "Loading..." : GetButtonText())
             </PrimaryButton>
-        }
+        </fieldset>
     </BottomContent>
 </LeftOverLayout>
