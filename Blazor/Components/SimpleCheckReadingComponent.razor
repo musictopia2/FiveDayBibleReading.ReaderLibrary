@@ -1,0 +1,31 @@
+﻿@if (_processing)
+{
+    return;
+}
+@if (_status == EnumStatus.Starting)
+{
+    <h1>Checking For Reading.  Please Wait</h1>
+    return;
+}
+@if (_status == EnumStatus.FinishedReading)
+{
+    <h1>Last Checked Reading On @DateTime.Now </h1>
+    <h1>Next reading is @readerService.ReadDate</h1>
+    return;
+}
+@if (readerService.CurrentChapter is null)
+{
+    <div>
+        There is no current chatper.  Rethink.
+    </div>
+    return;
+}
+<BibleReadingComponent HasMore="readerService.HasMoreChapters"
+                       BookName="@readerService.CurrentChapter.Book"
+                       Chapter="@readerService.CurrentChapter.Chapter"
+                       OnFinished="FinishReadingAsync"
+                       OnNextReading="FinishedSectionAsync">
+    <div>
+        Verses To Read @readerService.CurrentChapter.Book For Date @readerService.ReadDate
+    </div>
+</BibleReadingComponent>

@@ -1,0 +1,15 @@
+﻿global using CommonBasicLibraries.CollectionClasses;
+global using FiveDayBibleReading.ReaderLibrary.Core.Models;
+global using FiveDayBibleReading.ReaderLibrary.Core.Services;
+global using Microsoft.JSInterop;
+global using BasicBlazorLibrary.Helpers;
+global using dd1 = FiveDayBibleReading.ReaderLibrary.Core.Mocks.GlobalMock;
+global using CommonBasicLibraries.BasicDateTimeProcesses;
+global using ff1 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.FileFunctions.FileFunctions;
+global using ff2 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.JsonSerializers.FileHelpers;
+global using BibleDatabaseLibrary.TranslationStorageHelpers;
+global using FiveDayBibleReading.ReaderLibrary.Blazor.Storage;
+global using BibleDatabaseLibrary.Services;
+global using Microsoft.AspNetCore.Components;
+global using CommonBasicLibraries.BasicUIProcesses;
+global using BasicBlazorLibrary.Components.MediaQueries.ParentClasses;

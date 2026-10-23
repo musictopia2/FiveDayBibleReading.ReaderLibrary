@@ -1,0 +1,35 @@
+﻿<LeftOverLayout>
+    <TopContent>
+        @ChildContent
+        @if (_keyboard == false)
+        {
+            <PrimaryButton OnClick="ManuallyOpenCloseFullScreenAsync">
+                @GetDisplay
+            </PrimaryButton>
+            <ArrowDownComponent TargetHeight="6vh" Clicked="ProcessArrowDown" />
+        }
+    </TopContent>
+    <MainContent>
+        @if (Chapter > 0)
+        {
+            <ReaderComponent CanFocusFirst="true"
+            RenderList="_verses"
+            Height="100%"
+            @ref="_reader"
+            DataContext="_tempModel"
+            Context="verse"
+            Width="100%">
+                @verse
+            </ReaderComponent>
+        }
+    </MainContent>
+    <BottomContent>
+        
+        @if (Chapter > 0)
+        {
+            <PrimaryButton OnClick="ProcessAsync">
+                @GetButtonText()
+            </PrimaryButton>
+        }
+    </BottomContent>
+</LeftOverLayout>
